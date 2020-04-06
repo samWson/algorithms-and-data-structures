@@ -2,6 +2,7 @@ package samwson
 
 import scala.collection.mutable.ArrayBuffer
 
+// TODO: Replace ArrayBuffer with new samwson.Array.
 case class Set[A](private var elements: ArrayBuffer[A]) {
 
   def insert(value: A): Unit = {
