@@ -18,8 +18,20 @@ case class Array(private var elements: ArrayBuffer[Int]) {
 
   def length(): Int = elements.length
 
+  /** contains() makes use of linearSearch() and so the Array should be sorted before
+    * use or it may not work correctly.
+    */
+  def contains(value: Int): Boolean = {
+    this.linearSearch(value) match {
+      case Some(_) => true
+      case None => false
+    }
+  }
+
   /** linearSearch() is O(N) in time. It takes advantage of a sorted Array and may
     * not work correctly with an unsorted Array.
+    *
+    * Returns the index of the searched value if it is in the Array.
     */
   def linearSearch(value: Int): Option[Int] = {
     var index = 0

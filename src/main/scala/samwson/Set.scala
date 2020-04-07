@@ -2,20 +2,23 @@ package samwson
 
 import scala.collection.mutable.ArrayBuffer
 
-// TODO: Replace ArrayBuffer with new samwson.Array.
-case class Set[A](private var elements: ArrayBuffer[A]) {
+case class Set(private var elements: samwson.Array) {
 
-  def insert(value: A): Unit = {
+  def insert(value: Int): Unit = {
     if (!elements.contains(value)) {
-      elements.append(value)
+      elements.insert(value)
     }
   }
 
-  def delete(value: A): Unit = elements -= value
+  def delete(value: Int): Int = elements.delete(value)
 
-  def read(index: Int): A = elements(index)
+  def read(index: Int): Int = elements.read(index)
 
-  def search(value: A): Boolean = elements.contains(value)
+  def sort(): Unit = elements.bubbleSort()
+  
+  def contains(value: Int): Boolean = elements.contains(value)
+
+  def search(value: Int): Option[Int] = elements.linearSearch(value)
 
   def length(): Int = elements.length
 }

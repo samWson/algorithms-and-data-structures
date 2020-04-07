@@ -1,9 +1,10 @@
 package samwson
 
-import org.scalatest.FunSpec
+import org.scalatest.funspec.AnyFunSpec
 import scala.collection.mutable.ArrayBuffer
+import scala.language.reflectiveCalls
 
-class ArraySpec extends FunSpec {
+class ArraySpec extends AnyFunSpec {
 
   def fixture() = new {
     val array = samwson.Array(ArrayBuffer(1, 8, 4, 5, 3, 9))
@@ -50,6 +51,28 @@ class ArraySpec extends FunSpec {
 
     it("Returns the value at the read index") {
       assertResult(4) (f.array.read(2))
+    }
+  }
+
+  describe("Array::contains") {
+    val f = fixture()
+
+    describe("The value is in the array") {
+      it("Returns true") {
+        assertResult(true) {
+          f.array.bubbleSort()
+          f.array.contains(4)
+        }
+      }
+    }
+
+    describe("The value is not in the array") {
+      it("Returns false") {
+        assertResult(false) {
+          f.array.bubbleSort()
+          f.array.contains(2)
+        }
+      }
     }
   }
 
