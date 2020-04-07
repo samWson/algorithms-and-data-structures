@@ -8,9 +8,9 @@ import scala.collection.mutable.ArrayBuffer
   * It can be reused as an internal buffer for other classes in this repository
   * e.g. Set.
   */
-case class Array(private var elements: ArrayBuffer[Int]) {
+case class Array(private val elements: ArrayBuffer[Int]) {
 
-  def insert(value: Int) = elements += value
+  def insert(value: Int): Unit = elements += value
 
   def read(index: Int): Int = elements(index)
 
@@ -34,21 +34,24 @@ case class Array(private var elements: ArrayBuffer[Int]) {
     * Returns the index of the searched value if it is in the Array.
     */
   def linearSearch(value: Int): Option[Int] = {
-    var index = 0
+    linearSearch(value, this.elements)
+  }
 
-    for (element <- elements) {
-      if (element == value) {
-        return Some(index)
+  private def linearSearch(value: Int, array: ArrayBuffer[Int], index: Int = 0): Option[Int] = {
+    try {
+      array.head match {
+        case element if element == value => Some(index)
+        case element if element != value => {
+          if (element > value) {
+            None
+          } else {
+            linearSearch(value, array.tail, index + 1)
+          }
+        }
       }
-
-      if (element > value) {
-        return None
-      }
-
-      index += 1
+    } catch {
+      case e: NoSuchElementException => None
     }
-
-    None
   }
 
   /** bubbleSort() is O(N^2) in time.
