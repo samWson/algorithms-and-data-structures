@@ -7,8 +7,8 @@ import scala.language.reflectiveCalls
 class ArraySpec extends AnyFunSpec {
 
   def fixture() = new {
-    val array = samwson.Array(ArrayBuffer(1, 8, 4, 5, 3, 9))
-    val sortedArray = samwson.Array(ArrayBuffer(1, 3, 4, 5, 8, 9))
+    val array = samwson.Array(ArrayBuffer(1, 8, 4, 5, 3, 9, 7, 2, 6))
+    val sortedArray = samwson.Array(ArrayBuffer(1, 2, 3, 4, 5, 6, 7, 8, 9))
   }
 
   describe("Array::insert") {
@@ -17,14 +17,12 @@ class ArraySpec extends AnyFunSpec {
     it("Adds the value to the array") {
       val lengthBeforeInsertion = f.array.length()
 
-      f.array.insert(2)
+      f.array.insert(10)
 
-      assertResult(Some(3)) {
+      assertResult(true) {
         f.array.bubbleSort()
-        f.array.linearSearch(4)
+        f.array.contains(10)
       }
-
-      assertResult(lengthBeforeInsertion + 1) (f.array.length())
     }
   }
 
@@ -36,13 +34,12 @@ class ArraySpec extends AnyFunSpec {
 
       val deletedValue = f.array.delete(2)
 
-      assertResult(None) {
+      assertResult(false) {
         f.array.bubbleSort()
-        f.array.linearSearch(4)
+        f.array.contains(deletedValue)
       }
 
       assertResult(4) (deletedValue)
-      assertResult(lengthBeforeDeletion - 1) (f.array.length())
     }
   }
 
@@ -70,7 +67,7 @@ class ArraySpec extends AnyFunSpec {
       it("Returns false") {
         assertResult(false) {
           f.array.bubbleSort()
-          f.array.contains(2)
+          f.array.contains(10)
         }
       }
     }
@@ -81,7 +78,7 @@ class ArraySpec extends AnyFunSpec {
 
     describe("The value is in the array") {
       it("Returns the index of the first matching value") {
-        assertResult(Some(2)) {
+        assertResult(Some(3)) {
           f.array.bubbleSort()
           f.array.linearSearch(4)
         }
@@ -90,7 +87,10 @@ class ArraySpec extends AnyFunSpec {
 
     describe("The value is not in the array") {
       it("Returns None") {
-        assertResult(None) (f.array.linearSearch(2))
+        assertResult(None) {
+          f.array.bubbleSort()
+          f.array.linearSearch(10)
+        }
       }
     }
   }
