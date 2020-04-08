@@ -104,4 +104,27 @@ class ArraySpec extends AnyFunSpec {
       assertResult(f.sortedArray) (f.array)
     }
   }
+
+  describe("Array::binarySearch") {
+    val f = fixture()
+    f.array.bubbleSort()
+
+    describe("The searched element is in the lower half of the array") {
+      it("Returns the index of the searched element") {
+        assertResult(Some(2)) (f.array.binarySearch(3))
+      }
+    }
+
+    describe("The searched element is the upper half of the array") {
+      it("Returns the index of the searched element") {
+        assertResult(Some(7)) (f.array.binarySearch(8))
+      }
+    }
+
+    describe("The value is not in the array") {
+      it("Returns None") {
+        assertResult(None) (f.array.binarySearch(10))
+      }
+    }
+  }
 }

@@ -54,6 +54,27 @@ case class Array(private val elements: ArrayBuffer[Int]) {
     }
   }
 
+  /** binarySearch() is O(log N) in time. A sorted Array is required to work correctly.
+    *
+    * Returns the index of the searched value.
+    */
+  def binarySearch(value: Int): Option[Int] = {
+    binarySearch(value, elements.indices)
+  }
+
+  private def binarySearch(value: Int, range: Range): Option[Int] = {
+    val midRange = range.length / 2
+    val index = range(midRange)
+
+    elements(index) match {
+      case element if range.size == 1 && value == element => Some(elements.indexOf(element))
+      case element if range.size == 1 && value != element => None
+      case element if value == element => Some(elements.indexOf(element))
+      case element if value < element => binarySearch(value, range.min to index - 1)
+      case element if value > element => binarySearch(value, index + 1 to range.max)
+    }
+  }
+
   /** bubbleSort() is O(N^2) in time.
    */
   def bubbleSort(): Unit = {
@@ -63,7 +84,7 @@ case class Array(private val elements: ArrayBuffer[Int]) {
     while (!isSorted) {
       isSorted = true
 
-      for (index <- new Range.Exclusive(0, unsortedUntilIndex, 1)) {
+      for (index <- 0 until unsortedUntilIndex) {
         if (elements(index) > elements(index + 1)) {
           isSorted = false
           val temp = elements(index)
