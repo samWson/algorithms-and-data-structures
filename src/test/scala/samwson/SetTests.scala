@@ -29,7 +29,7 @@ class SetSpec extends AnyFunSpec {
     describe("The value is in the set") {
       val f = fixture()
 
-      it("Does not allow duplicate values in the set") {
+      it("Silently does nothing") {
         val lengthBeforeInsertion = f.set.length()
 
         f.set.insert(3)
