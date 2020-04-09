@@ -20,7 +20,7 @@ class ArraySpec extends AnyFunSpec {
       f.array.insert(10)
 
       assertResult(true) {
-        f.array.bubbleSort()
+        f.array.sort()
         f.array.contains(10)
       }
     }
@@ -35,7 +35,7 @@ class ArraySpec extends AnyFunSpec {
       val deletedValue = f.array.delete(2)
 
       assertResult(false) {
-        f.array.bubbleSort()
+        f.array.sort()
         f.array.contains(deletedValue)
       }
 
@@ -57,7 +57,7 @@ class ArraySpec extends AnyFunSpec {
     describe("The value is in the array") {
       it("Returns true") {
         assertResult(true) {
-          f.array.bubbleSort()
+          f.array.sort()
           f.array.contains(4)
         }
       }
@@ -66,7 +66,7 @@ class ArraySpec extends AnyFunSpec {
     describe("The value is not in the array") {
       it("Returns false") {
         assertResult(false) {
-          f.array.bubbleSort()
+          f.array.sort()
           f.array.contains(10)
         }
       }
@@ -79,7 +79,7 @@ class ArraySpec extends AnyFunSpec {
     describe("The value is in the array") {
       it("Returns the index of the first matching value") {
         assertResult(Some(3)) {
-          f.array.bubbleSort()
+          f.array.sort()
           f.array.linearSearch(4)
         }
       }
@@ -88,7 +88,7 @@ class ArraySpec extends AnyFunSpec {
     describe("The value is not in the array") {
       it("Returns None") {
         assertResult(None) {
-          f.array.bubbleSort()
+          f.array.sort()
           f.array.linearSearch(10)
         }
       }
@@ -124,9 +124,19 @@ class ArraySpec extends AnyFunSpec {
     }
   }
 
+  describe("Array::selectionSort") {
+    val f = fixture()
+
+    it("Sorts the array elements") {
+      f.array.selectionSort()
+
+      assertResult(f.sortedArray) (f.array)
+    }
+  }
+
   describe("Array::binarySearch") {
     val f = fixture()
-    f.array.bubbleSort()
+    f.array.sort()
 
     describe("The searched element is in the lower half of the array") {
       it("Returns the index of the searched element") {

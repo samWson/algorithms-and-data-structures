@@ -18,6 +18,8 @@ case class Array(private val elements: ArrayBuffer[Int]) {
 
   def length(): Int = elements.length
 
+  def sort(): Unit = this.selectionSort()
+
   /** contains() makes use of linearSearch() and so the Array should be sorted before
     * use or it may not work correctly.
     */
@@ -112,6 +114,27 @@ case class Array(private val elements: ArrayBuffer[Int]) {
       }
 
       unsortedUntilIndex -= 1
+    }
+  }
+
+  /** selectionSort() is O(N^2) in time. It is faster than bubbleSort() as it has
+    * to make fewer swaps for each passthrough.
+    */
+  def selectionSort(): Unit = {
+    elements.indices.foreach { i =>
+      var lowestValueIndex = i
+
+      elements.indices.drop(i + 1).foreach { j =>
+        if (elements(j) < elements(lowestValueIndex)) {
+          lowestValueIndex = j
+        }
+      }
+
+      if (lowestValueIndex != i) {
+        val temp = elements(i)
+        elements(i) = elements(lowestValueIndex)
+        elements(lowestValueIndex) = temp
+      }
     }
   }
 }
