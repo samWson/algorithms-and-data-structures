@@ -134,6 +134,16 @@ class ArraySpec extends AnyFunSpec {
     }
   }
 
+  describe("Array::insertionSort") {
+    val f = fixture()
+
+    it("Sorts the array elements") {
+      f.array.insertionSort()
+
+      assertResult(f.sortedArray) (f.array)
+    }
+  }
+
   describe("Array::binarySearch") {
     val f = fixture()
     f.array.sort()

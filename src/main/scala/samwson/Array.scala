@@ -18,7 +18,7 @@ case class Array(private val elements: ArrayBuffer[Int]) {
 
   def length(): Int = elements.length
 
-  def sort(): Unit = this.selectionSort()
+  def sort(): Unit = this.insertionSort()
 
   /** contains() makes use of linearSearch() and so the Array should be sorted before
     * use or it may not work correctly.
@@ -135,6 +135,23 @@ case class Array(private val elements: ArrayBuffer[Int]) {
         elements(i) = elements(lowestValueIndex)
         elements(lowestValueIndex) = temp
       }
+    }
+  }
+
+  /** insertionSort() is O(N^2) in time. It has faster best case performance and
+    * equivalent average case performance compared to selectionSort().
+    */
+  def insertionSort(): Unit = {
+    elements.indices.drop(1).foreach { index =>
+      var position = index
+      val removedValue = elements(index)
+
+      while ((position > 0) && (elements(position - 1) > removedValue)) {
+        elements(position) = elements(position - 1)
+        position = position - 1
+      }
+
+      elements(position) = removedValue
     }
   }
 }
