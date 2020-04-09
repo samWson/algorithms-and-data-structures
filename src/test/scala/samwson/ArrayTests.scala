@@ -95,6 +95,25 @@ class ArraySpec extends AnyFunSpec {
     }
   }
 
+  describe("Array::hasDuplicateValue") {
+    describe("The array has a duplicate value") {
+      val f = fixture()
+      f.array.insert(7)
+
+      it("Returns true") {
+        assertResult(true) (f.array.hasDuplicateValue())
+      }
+    }
+
+    describe("The array does not have any duplicate values") {
+      val f = fixture()
+
+      it("Returns false") {
+        assertResult(false) (f.array.hasDuplicateValue())
+      }
+    }
+  }
+
   describe("Array::bubbleSort") {
     val f = fixture()
 

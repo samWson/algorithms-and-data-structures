@@ -54,6 +54,24 @@ case class Array(private val elements: ArrayBuffer[Int]) {
     }
   }
 
+  /** hasDuplicateValue() is O(N) in time.
+    *
+    * Returns true if the Array has any duplicate elements.
+    */
+  def hasDuplicateValue(): Boolean = {
+    val existingValues = scala.collection.mutable.HashMap[Int, Boolean]().withDefaultValue(false)
+
+    for (element <- elements) {
+      if (existingValues(element)) {
+        return true
+      } else {
+        existingValues += (element -> true)
+      }
+    }
+
+    return false
+  }
+
   /** binarySearch() is O(log N) in time. A sorted Array is required to work correctly.
     *
     * Returns the index of the searched value.
