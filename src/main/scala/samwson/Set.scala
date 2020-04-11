@@ -1,7 +1,5 @@
 package samwson
 
-import scala.collection.mutable.ArrayBuffer
-
 case class Set(private var elements: samwson.Array) {
 
   def insert(value: Int): Unit = {
@@ -15,7 +13,7 @@ case class Set(private var elements: samwson.Array) {
   def read(index: Int): Int = elements.read(index)
 
   def sort(): Unit = elements.bubbleSort()
-  
+
   def contains(value: Int): Boolean = elements.contains(value)
 
   def search(value: Int): Option[Int] = elements.linearSearch(value)
