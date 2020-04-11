@@ -74,6 +74,29 @@ case class Array(private val elements: ArrayBuffer[Int]) {
     return false
   }
 
+  /** intersection() is O(N^2) in time.
+    *
+    * Returns the intersection of this Array and the collection.
+    */
+  def intersection(collection: ArrayBuffer[Int]): ArrayBuffer[Int] = {
+    import scala.util.control.Breaks._
+
+    val intersection = ArrayBuffer[Int]()
+
+    elements.foreach { e =>
+      collection.foreach { j =>
+        breakable {
+          if (e == j) {
+            intersection += e
+            break()
+          }
+        }
+      }
+    }
+
+    intersection
+  }
+
   /** binarySearch() is O(log N) in time. A sorted Array is required to work correctly.
     *
     * Returns the index of the searched value.

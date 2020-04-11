@@ -11,6 +11,12 @@ class ArraySpec extends AnyFunSpec {
     val sortedArray = samwson.Array(ArrayBuffer(1, 2, 3, 4, 5, 6, 7, 8, 9))
   }
 
+  def intersectionFixture() = new {
+    val arrayWithCommonElements = ArrayBuffer(1, 17, 9, 10, 5, 14, 2)
+    val arrayWithoutCommonElements = ArrayBuffer(17, 10, 14)
+    val expectedIntersection = ArrayBuffer(1, 9, 5, 2)
+  }
+
   describe("Array::insert") {
     val f = fixture()
 
@@ -110,6 +116,28 @@ class ArraySpec extends AnyFunSpec {
 
       it("Returns false") {
         assertResult(false) (f.array.hasDuplicateValue())
+      }
+    }
+  }
+
+  describe("Array::intersection") {
+    describe("The two arrays have common elements") {
+      val f = fixture()
+      val g = intersectionFixture()
+
+      it("Returns the intersection of the arrays") {
+        assertResult(g.expectedIntersection.sortInPlace) {
+          f.array.intersection(g.arrayWithCommonElements).sortInPlace
+        }
+      }
+    }
+
+    describe("The two arrays have no elements in common") {
+      val f = fixture()
+      val g = intersectionFixture()
+
+      it("Returns an empty array") {
+        assertResult(ArrayBuffer()) (f.array.intersection(g.arrayWithoutCommonElements))
       }
     }
   }
