@@ -18,7 +18,7 @@ case class Array(private val elements: ArrayBuffer[Int]) {
 
   def length(): Int = elements.length
 
-  def sort(): Unit = this.insertionSort()
+  def sort(): Unit = this.quickSort()
 
   /** contains() makes use of linearSearch() and so the Array should be sorted before
     * use or it may not work correctly.
@@ -176,5 +176,38 @@ case class Array(private val elements: ArrayBuffer[Int]) {
 
       elements(position) = removedValue
     }
+  }
+
+  /** quickSort() is O(N log N) in best and average case for time. It is faster
+    * than insertionSort() for average case performance.
+    */
+  def quickSort(): Unit = {
+    def swap(i: Int, j: Int): Unit = {
+      val temp = elements(i)
+      elements(i) = elements(j)
+      elements(j) = temp
+    }
+
+    def partition(left: Int, right: Int): Unit = {
+      val pivot = elements((left + right) / 2)
+      var i = left
+      var j = right
+
+      while (i <= j) {
+        while (elements(i) < pivot) i += 1
+        while (elements(j) > pivot) j -= 1
+
+        if (i <= j) {
+          swap(i, j)
+          i += 1
+          j -= 1
+        }
+      }
+
+      if (left < j) partition(left, j)
+      if (j < right) partition(i, right)
+    }
+
+    partition(0, elements.length - 1)
   }
 }
