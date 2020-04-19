@@ -1,11 +1,13 @@
 package samwson
 
-case class Queue(private val elements: samwson.Array) {
+class Queue() {
+  private val elements = new samwson.DoublyLinkedList()
+
   def length(): Int = elements.length()
 
-  def enqueue(value: Int): Unit = elements.insert(value)
+  def enqueue(value: Int): this.type = { elements.append(value); this }
 
-  def dequeue(): Int = elements.delete(0)
+  def dequeue(): Int = elements.delete()
 
   def read(): Int = elements.read(0)
 }

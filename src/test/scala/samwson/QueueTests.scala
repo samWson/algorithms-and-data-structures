@@ -5,9 +5,10 @@ import scala.language.reflectiveCalls
 
 class QueueSpec extends AnyFunSpec {
   def fixture() = new {
-    val queue = samwson.Queue(
-      samwson.Array(scala.collection.mutable.ArrayBuffer(8, 4, 6))
-    )
+    val queue = new samwson.Queue()
+      .enqueue(8)
+      .enqueue(4)
+      .enqueue(6)
   }
 
   describe("Queue::enqueue") {
